@@ -1,5 +1,5 @@
 <div style="flex-wrap: wrap;display: flex;align-items: center;justify-content: center;background: rgba(169,169,169,0.12);height: 80vh;width: 80vw">
-<div style="width: 100%;display: flex;justify-content: center"><h2 style="">SQL Table</h2></div>
+<div style="width: 100%;display: flex;justify-content: center"><h2 style="">SQL Schema</h2></div>
 
 <table style="margin-top: -30%;width: 50%">
   <tr>

@@ -8,13 +8,13 @@
     <th>acs</th>
   </tr>
   <tr>
-    <td>user .1</td>
-    <td>1234</td>
+    <td>admin</td>
+    <td>admin</td>
     <td>admin</td>
   </tr>
   <tr>
-    <td>user .2</td>
-    <td>1234</td>
+    <td>guest </td>
+    <td>guest</td>
     <td>user</td>
   </tr>
 

@@ -27,4 +27,24 @@ function find_in_sql_login($user_,$pass_):bool{
     }
 
 }
+function get_user_ac($usr_name):string{
+    $servername = "localhost";
+    $username = "am1";
+    $password = "A@mir881401";
+    $db_name = "vpn_am1ral1";
+//        $us=;
+    $conn = new mysqli($servername, $username, $password,$db_name);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
+    $stmt->bind_param("s", $usr_name);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $_query__r=mysqli_fetch_assoc($result);
+    return $_query__r['acs'];
+}
+
 ?>

@@ -15,10 +15,10 @@ if (in_array($url[0],$urls1)){
     (str_replace("'", "", $pr))()();
 }else if ($url[0]==="/"){
 
-    login();
+dashboard();
 }
 else{
-   dashboard();
+err404();
 }
 
 ?>

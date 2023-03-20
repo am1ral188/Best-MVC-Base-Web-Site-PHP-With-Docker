@@ -1,14 +1,14 @@
 <?php
 include_once "model/sql_helpers.php";
 if (isset($_SESSION['user'])){
-//    header('Location: ../logout.php');
+    header('Location: ../dash');
 
 //    echo "a";
     die("");
 }
     if(!(isset($_GET['user'])&&isset($_GET['pass']))){
 
-        echo file_get_contents('./View/index.html');
+        echo file_get_contents('./View/login.html');
         die();
     }else{
 

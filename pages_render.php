@@ -9,4 +9,7 @@ function dashboard(){
 function logout(){
     include_once "controler/logout.php";
 }
+function err404(){
+    echo file_get_contents("View/404.html");
+}
 ?>

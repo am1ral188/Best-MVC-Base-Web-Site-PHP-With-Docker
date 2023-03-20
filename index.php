@@ -8,9 +8,17 @@ $urls1=[
     "logout"=>"logout"
 
 ];
+//echo var_dump($url);
 if (in_array($url[0],$urls1)){
     $pr=$urls1[$url[0]];
+
     (str_replace("'", "", $pr))()();
+}else if ($url[0]==="/"){
+
+    login();
+}
+else{
+   dashboard();
 }
 
 ?>

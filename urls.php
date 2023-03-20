@@ -2,7 +2,8 @@
 $urls1=[
     "login"=>"login",
     "dash"=>"dashboard",
-    "logout"=>"logout"
+    "logout"=>"logout",
+    "404"=>"err404"
 
 ];
 

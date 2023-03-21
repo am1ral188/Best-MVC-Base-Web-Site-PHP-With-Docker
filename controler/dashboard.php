@@ -5,7 +5,7 @@ if(!isset($_SESSION['user'])){
     die();
 }
 else{
-    if (get_user_ac($_GET['user']==='admin')){
+    if (get_user_ac($_SESSION['user'])==='admin'){
         echo file_get_contents("View/index2.html");
 
     }else{

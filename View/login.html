@@ -7,7 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-
+#errr{
+    opacity:0
+}
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans");
 html, body {
   position: relative;
@@ -255,28 +257,80 @@ html, body {
     <div class="signup">
         <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
         <div class="form-holder">
+
             <input type="text" class="input" placeholder="Name" />
             <input type="password" class="input" placeholder="Password" />
         </div>
-        <button class="submit-btn">Sign up</button>
+        <button class="submit-btn" onclick="send_()">Sign up</button>
+        <br><h4 id="errr" style="text-align:center;background:rgba(255,10,7,0.82);padding:10px">err</h4>
+
     </div>
     <div class="login slide-up">
         <div class="center">
             <h2 class="form-title" id="login"><span>or</span>Log in</h2>
             <div class="form-holder">
-            <form class="" method="get" action="../controler/login.php">
-                <input type="text" class="input" placeholder="username" name="user" />
+                <input type="text" class="input" placeholder="username" id="user" />
 
-                <input type="password" class="input" placeholder="Password" name="pass" /></div>
+                <input type="password" class="input" placeholder="Password" id="pass" /></div>
                 <br>
-                <div style="width: 101%;height: 101%;margin:0;background: #fff">            <button class="submit-btn" style="margin: 0">Log in</button>
+                <div style="width: 101%;height: 101%;margin:0;background: #fff">            <button class="submit-btn" style="margin: 0" >Log in</button>
 
-            </form>
+
             </div>
         </div>
     </div>
 </div>
 <script>
+function send_(){
+    // Get user credentials
+    const username = document.getElementById('user').value;
+    const password = document.getElementById('pass').value;
+
+// Create new XMLHttpRequest object
+    const xhr = new XMLHttpRequest();
+
+// Define endpoint URL (replace 'your-api-endpoint' with your actual endpoint URL)
+    const url = '../signup';
+
+// Open a new POST request
+    xhr.open('POST', url);
+
+// Set request header(s)
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+// Set request payload
+    const payload = JSON.stringify({
+        user: username,
+        pass: password
+    });
+
+// Define what to do on load response
+    xhr.onload = function() {
+        if (xhr.status === 200 ) {
+            // On success
+            if (response.status === 'ok'){
+                location.reload(true);
+
+            }else{
+                var b=document.getElementById("errr");
+                b.style.opacity=1;
+                b.innerHtml="incrrect username";
+            }
+        } else {
+            // On error
+            var b=document.getElementById("errr");
+            b.style.opacity=1;
+            b.innerHtml="error in connection";        }
+    };
+
+// Send request
+    xhr.send(payload);
+}
+//==================================
+//==================================
+//==================================
+//=+=+= +=+++===++
+
 console.clear();
 
 const loginBtn = document.getElementById('login');
@@ -286,7 +340,6 @@ loginBtn.addEventListener('click', (e) => {
 	let parent = e.target.parentNode.parentNode;
 	Array.from(e.target.parentNode.parentNode.classList).find((element) => {
 		if(element !== "slide-up") {
-			parent.classList.add('slide-up')
 		}else{
 			signupBtn.parentNode.classList.add('slide-up')
 			parent.classList.remove('slide-up')
@@ -298,7 +351,7 @@ signupBtn.addEventListener('click', (e) => {
 	let parent = e.target.parentNode;
 	Array.from(e.target.parentNode.classList).find((element) => {
 		if(element !== "slide-up") {
-			parent.classList.add('slide-up')
+<!--			parent.classList.add('slide-up')-->
 		}else{
 			loginBtn.parentNode.parentNode.classList.add('slide-up')
 			parent.classList.remove('slide-up')

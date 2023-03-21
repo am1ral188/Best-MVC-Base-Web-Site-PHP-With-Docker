@@ -34,6 +34,37 @@ function find_in_sql_login($user_, $pass_) {
     return false;
   }
 }
+function insert_in_sql_login($user_, $pass_):bool {
+  // Create connection
+  $conn = mysqli_connect("localhost", "am1", "A@mir881401", "vpn_am1ral1");
+
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+
+  // Prepare a statement
+    $username =$user_;
+    $password = password_hash($pass_, PASSWORD_DEFAULT);
+    $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+    $stmt->bind_param("ss", $username, $password);
+
+// Execute statement
+    $stmt->execute();
+
+// Check for errors
+    if ($stmt->errno) {
+return false;
+
+    } else {
+       return true;
+    }
+
+// Close statement and connection
+    $stmt->close();
+    $mysqli->close();
+
+}
 
 function get_user_ac($usr_name):string{
     $servername = "localhost";

@@ -3,7 +3,7 @@
     die();
 
 }
-if (isset($_GET['logout'])){
+if (isset($_POST['logout'])){
 session_destroy();
 session_unset();
 }

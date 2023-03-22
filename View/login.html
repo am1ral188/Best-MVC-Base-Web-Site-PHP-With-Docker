@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-#errr{
+#errr,#errr2{
     opacity:0
 }
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans");
@@ -258,8 +258,8 @@ html, body {
         <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
         <div class="form-holder">
 
-            <input type="text" class="input" placeholder="Name" />
-            <input type="password" class="input" placeholder="Password" />
+            <input type="text" class="input" placeholder="Name" id="user" />
+            <input type="password" class="input" placeholder="Password"  id="pass" />
         </div>
         <button class="submit-btn" onclick="send_()">Sign up</button>
         <br><h4 id="errr" style="text-align:center;background:rgba(255,10,7,0.82);padding:10px">err</h4>
@@ -269,14 +269,15 @@ html, body {
         <div class="center">
             <h2 class="form-title" id="login"><span>or</span>Log in</h2>
             <div class="form-holder">
-                <input type="text" class="input" placeholder="username" id="user" />
+                <input type="text" class="input" placeholder="username" id="user2" />
 
-                <input type="password" class="input" placeholder="Password" id="pass" /></div>
+                <input type="password" class="input" placeholder="Password" id="pass2" /></div>
                 <br>
-                <div style="width: 101%;height: 101%;margin:0;background: #fff">            <button class="submit-btn" style="margin: 0" >Log in</button>
+                <div style="width: 101%;height: 101%;margin:0;background: #fff">            <button class="submit-btn" onclick="send__()" style="margin: 0" >Log in</button>
 
+                    <br><h4 id="errr2" style="text-align:center;background:rgba(255,10,7,0.82);padding:10px">err</h4>
 
-            </div>
+                </div>
         </div>
     </div>
 </div>
@@ -285,7 +286,12 @@ function send_(){
     // Get user credentials
     const username = document.getElementById('user').value;
     const password = document.getElementById('pass').value;
-
+    if((username===""||password==="")||(username.length<=4||password.length<=4)){
+        var b=document.getElementById("errr");
+        b.style.opacity=1;
+        b.innerHtml="incrrect username";
+    return;
+    }
 // Create new XMLHttpRequest object
     const xhr = new XMLHttpRequest();
 
@@ -319,6 +325,56 @@ function send_(){
         } else {
             // On error
             var b=document.getElementById("errr");
+            b.style.opacity=1;
+            b.innerHtml="error in connection";        }
+    };
+
+// Send request
+    xhr.send(payload);
+}
+function send__(){
+    // Get user credentials
+    const username = document.getElementById('user2').value;
+    const password = document.getElementById('pass2').value;
+    if((username===""||password==="")||(username.length<=4||password.length<=4)){
+        var b=document.getElementById("errr2");
+        b.style.opacity=1;
+        b.innerHtml="incrrect username";
+    return;
+    }
+// Create new XMLHttpRequest object
+    const xhr = new XMLHttpRequest();
+
+// Define endpoint URL (replace 'your-api-endpoint' with your actual endpoint URL)
+    const url = '../login';
+
+// Open a new POST request
+    xhr.open('POST', url);
+
+// Set request header(s)
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+// Set request payload
+    const payload = JSON.stringify({
+        user: username,
+        pass: password
+    });
+
+// Define what to do on load response
+    xhr.onload = function() {
+        if (xhr.status === 200 ) {
+            // On success
+            if (response.status === 'ok'){
+                location.reload(true);
+
+            }else{
+                var b=document.getElementById("errr2");
+                b.style.opacity=1;
+                b.innerHtml="incrrect username";
+            }
+        } else {
+            // On error
+            var b=document.getElementById("errr2");
             b.style.opacity=1;
             b.innerHtml="error in connection";        }
     };

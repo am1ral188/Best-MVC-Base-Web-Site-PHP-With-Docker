@@ -7,41 +7,45 @@ if($url[0]==="/"){
     $_Main=new main_Page();
     $_Main->index();
 }else{
-if (file_exists("controller/".$url[0]."php")){
-    include_once "controller/".$url[0];
+    $aaa="controller/".$url[0].".php";
+if (file_exists($aaa)){
+    include_once $aaa;
     $cont=new  $url[0];
-if(isset($url[1])){
+if($url[1]!==""){
     if (method_exists($url[0],$url[1])){
+//        $reflection = new ReflectionFunction('');
+//        $params = $reflection->getParameters();
+//        $num_of_args=1;
+//       if ($reflection->getNumberOfParameters()>=1){
+//           $code = $url[0].$url[1]."(";
+//
+//           foreach ($params as $param) {
+//               $num_of_args+=1;
+//               $code.=",".$url[$num_of_args];
+//           }
+//           $code.=")";
+//
+//           eval($code);
+//
+//           if(isset($url[$num_of_args])){
+//               $cont->$url[1]();
+//           }
+//       }else{
+//
+//       }
+        $cont->$url[1]();
 
-
-
-        $reflection = new ReflectionFunction($url[1]);
-        $params = $reflection->getParameters();
-        $num_of_args=1;
-        $code = $url[0].$url[1]."(";
-
-        foreach ($params as $param) {
-            $num_of_args+=1;
-            $code.=",".$url[$num_of_args];
-        }
-        $code.=")";
-
-        eval($code);
-
-        if(isset($url[$num_of_args])){
-            $cont->$url[1]();
-        }
 
 
     }else{
-        echo "404";
+        echo "44";
     }
 }else{
-    $cont->idex();
+    $cont->index();
 
 }
 }else{
-    echo "404";
+    echo "404_";
 
 }}
 

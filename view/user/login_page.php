@@ -288,8 +288,8 @@
         const password = document.getElementById('pass').value;
         const username = document.getElementById('user').value;
         $.ajax({
-            url: '<?php echo site_root."login_/signup"; ?>',
-            method: 'POST',
+            url: '<?php echo site_root."login_/login"; ?>',
+            method: 'GET',
             dataType: 'json',
             data: {user:username,pass: password }, // this will be converted to JSON automatically
             beforeSend: function(xhr) {
@@ -311,8 +311,8 @@
         const password = document.getElementById('pass2').value;
         const username = document.getElementById('user2').value;
         $.ajax({
-            url: '<?php echo site_root."login_/signup"; ?>',
-            method: 'POST',
+            url: '<?php echo site_root."login_/login"; ?>',
+            method: 'GET',
             dataType: 'json',
             data: {"user":username,"pass": password }, // this will be converted to JSON automatically
             beforeSend: function(xhr) {

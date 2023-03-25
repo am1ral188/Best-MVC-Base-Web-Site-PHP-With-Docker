@@ -10,7 +10,7 @@ public function find_in_sql_login($user_, $pass_) {
     }
 
     // Prepare a statement
-    $stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE username = ? AND password = ?");
+    $stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE username = ? AND pass = ?");
 
     // Bind parameters
     mysqli_stmt_bind_param($stmt, "ss", $user_, $pass_);
@@ -46,7 +46,7 @@ public function find_in_sql_login($user_, $pass_) {
     // Prepare a statement
     $username =$user_;
     $password = password_hash($pass_, PASSWORD_DEFAULT);
-    $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+    $stmt = $conn->prepare("INSERT INTO users (username, pass) VALUES (?, ?)");
     $stmt->bind_param("ss", $username, $password);
 
 // Execute statement

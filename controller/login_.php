@@ -11,6 +11,7 @@ class  login_{
 
     }
     public function login(){
+
         include_once "model/log_user.php";
         $log_=new log_user();
         if (isset($_SESSION['user'])){
@@ -19,7 +20,8 @@ class  login_{
 //       view("user/login_page");
             die("");
         }
-        if(!(isset($_POST['user'])&&isset($_POST['pass']))){
+
+        if((($_GET['user']==null)||($_GET['pass']==null))){
 
            view("user/login_page");
             die();
@@ -27,12 +29,12 @@ class  login_{
 
 
 
-            if ($log_->find_in_sql_login($_POST['user'],    $password = password_hash($_POST['pass'], PASSWORD_DEFAULT))){
+            if ($log_->find_in_sql_login($_GET['user'],    $password = password_hash($_GET['pass'], PASSWORD_DEFAULT))){
 
 
                 session_start();
-                $_SESSION['user']=$_POST['user'];
-                $_SESSION['pass']=$_POST['pass'];
+                $_SESSION['user']=$_GET['user'];
+                $_SESSION['pass']=$_GET['pass'];
 
 
 
@@ -56,14 +58,14 @@ class  login_{
 //    echo "a";
             die("");
         }
-        if (!(isset($_POST['user']) && isset($_POST['pass']))) {
+        if (!(isset($_GET['user']) && isset($_GET['pass']))) {
 
             view("user/login_page");
             die();
         } else {
-                $log=log_user();
+                $log=new log_user();
 
-            if ($log->find_in_sql_login($_POST['user'], $_POST['pass'])) {
+            if ($log->find_in_sql_login($_GET['user'], $_GET['pass'])) {
                 $response__header = ['status' => 'Nok','info'=>"username already exists "];
                 header('Content-Type: application/json; charset=utf-8');
                 echo json_encode($response__header, true);
@@ -79,9 +81,10 @@ class  login_{
 //        echo json_encode($response__header, true);
 
             } else {
+                $log->insert_in_sql_login($_GET['user'],$_GET['pass']);
                 session_start();
-                $_SESSION['user'] = $_POST['user'];
-                $_SESSION['pass'] = $_POST['pass'];
+                $_SESSION['user'] = $_GET['user'];
+                $_SESSION['pass'] = $_GET['pass'];
 
 
                 $response__header = ['status' => 'ok'];

@@ -21,7 +21,7 @@ class  login_{
         }
         if(!(isset($_POST['user'])&&isset($_POST['pass']))){
 
-            echo file_get_contents('./View/login.html');
+           view("user/login_page");
             die();
         }else{
 
@@ -58,7 +58,7 @@ class  login_{
         }
         if (!(isset($_POST['user']) && isset($_POST['pass']))) {
 
-            echo file_get_contents('./View/login.html');
+            view("user/login_page");
             die();
         } else {
                 $log=log_user();

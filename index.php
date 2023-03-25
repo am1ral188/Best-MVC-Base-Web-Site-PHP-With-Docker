@@ -33,19 +33,21 @@ if($url[1]!==""){
 //       }else{
 //
 //       }
-        $cont->$url[1]();
+//    $cont->$url[1]();
+
+        call_user_func(array($cont, $url[1]));
 
 
 
     }else{
-        echo "44";
+        echo "404";
     }
 }else{
     $cont->index();
 
 }
 }else{
-    echo "404_";
+    echo "404";
 
 }}
 

@@ -281,106 +281,52 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     function send_(e){
-        // Get user credentials
-        const username = document.getElementById('user').value;
         const password = document.getElementById('pass').value;
-        if((username===""||password==="")||(username.length<=4||password.length<=4)){
-            var b=document.getElementById("errr");
-            b.style.opacity=1;
-            b.innerHtml="incrrect username";
-            return;
-        }
-// Create new XMLHttpRequest object
-        const xhr = new XMLHttpRequest();
-
-// Define endpoint URL (replace 'your-api-endpoint' with your actual endpoint URL)
-        const url = '<?php echo site_root."login_/signup"; ?>';
-
-// Open a new POST request
-        xhr.open('POST', url);
-
-// Set request header(s)
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-// Set request payload
-        const payload = JSON.stringify({
-            user: username,
-            pass: password
+        const username = document.getElementById('user').value;
+        $.ajax({
+            url: '<?php echo site_root."login_/signup"; ?>',
+            method: 'POST',
+            dataType: 'json',
+            data: {user:username,pass: password }, // this will be converted to JSON automatically
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('Content-Type', 'application/json');
+            },
+            success: function(data) {
+              alert(data)
+            },
+            error: function(xhr, status, error) {
+                var b2=document.getElementById("errr");
+                b2.style.opacity=1;
+                b2.innerHtml="error in connection";
+            }
         });
-
-// Define what to do on load response
-        xhr.onload = function(e) {
-            if (xhr.status === 200 ) {
-                // On success
-                if (this.response.status === 'ok'){
-                    location.reload(true);
-
-                }else{
-                    var b3=document.getElementById("errr");
-                    b3.style.opacity=1;
-                    b3.innerHtml="incrrect username";
-                }
-            } else {
-                // On error
-                var b4=document.getElementById("errr");
-                b4.style.opacity=1;
-                b4.innerHtml="error in connection";        }
-        };
-
-// Send request
-        xhr.send(payload);
     }
     function send__(){
         // Get user credentials
-        const username = document.getElementById('user2').value;
+
         const password = document.getElementById('pass2').value;
-        if((username===""||password==="")||(username.length<=4||password.length<=4)){
-            var b=document.getElementById("errr2");
-            b.style.opacity=1;
-            b.innerHtml="incrrect username";
-            return;
-        }
-// Create new XMLHttpRequest object
-        const xhr = new XMLHttpRequest();
-
-// Define endpoint URL (replace 'your-api-endpoint' with your actual endpoint URL)
-        const url = '<?php echo site_root."login_/login"; ?>';
-
-// Open a new POST request
-        xhr.open('POST', url);
-
-// Set request header(s)
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-// Set request payload
-        const payload = JSON.stringify({
-            user: username,
-            pass: password
-        });
-
-// Define what to do on load response
-        xhr.onload = function() {
-            if (xhr.status === 200 ) {
-                // On success
-                if (response.status === 'ok'){
-                    location.reload(true);
-
-                }else{
-                    var b1=document.getElementById("errr2");
-                    b1.style.opacity=1;
-                    b1.innerHtml="incrrect username";
-                }
-            } else {
-                // On error
-                var b2=document.getElementById("errr2");
+        const username = document.getElementById('user2').value;
+        $.ajax({
+            url: '<?php echo site_root."login_/signup"; ?>',
+            method: 'POST',
+            dataType: 'json',
+            data: {"user":username,"pass": password }, // this will be converted to JSON automatically
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('Content-Type', 'application/json');
+            },
+            success: function(data) {
+                alert(data)
+            },
+            error: function(xhr, status, error) {
+                var b2=document.getElementById("errr");
                 b2.style.opacity=1;
-                b2.innerHtml="error in connection";        }
-        };
-
-// Send request
-        xhr.send(payload);
+                b2.innerHtml="error in connection";
+            }
+        });
     }
     //==================================
     //==================================

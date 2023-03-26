@@ -67,7 +67,7 @@ class  login_{
         } else {
                 $log=new log_user();
 
-            if ($log->find_in_sql_login($_GET['user'], $_GET['pass'])) {
+            if ($log->find_in_sql_login2($_GET['user'])) {
                 $response__header = ['status' => 'Nok','info'=>"username already exists "];
                 header('Content-Type: application/json; charset=utf-8');
                 echo json_encode($response__header, true);
@@ -89,11 +89,9 @@ class  login_{
                 $_SESSION['pass'] = $_GET['pass'];
 
 
-                $response__header = ['status' => 'ok'];
                 header('Content-Type: application/json; charset=utf-8');
-                echo json_encode($response__header, true);
+
                 $response__heade = ['status' => 'ok','info'=>"you are signed"];
-                header('Content-Type: application/json; charset=utf-8');
                 echo json_encode($response__heade, true);
             }
         }

@@ -288,7 +288,7 @@
         const password = document.getElementById('pass').value;
         const username = document.getElementById('user').value;
         $.ajax({
-            url: '<?php echo site_root."login_/login"; ?>',
+            url: '<?php echo site_root."login_/signup"; ?>',
             method: 'GET',
             dataType: 'json',
             data: {user:username,pass: password }, // this will be converted to JSON automatically

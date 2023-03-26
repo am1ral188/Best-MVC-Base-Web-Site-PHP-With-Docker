@@ -80,9 +80,9 @@ public function find_in_sql_login2($user_) {
     // Prepare a statement
     $username =$user_;
     $us="user";
-    $password = password_hash($pass_, PASSWORD_DEFAULT);
+
     $stmt = $conn->prepare("INSERT INTO users (username, pass,acs) VALUES (?, ?,?)");
-    $stmt->bind_param("sss", $username, $password,$us);
+    $stmt->bind_param("sss", $username, $pass_,$us);
 
 // Execute statement
     $stmt->execute();

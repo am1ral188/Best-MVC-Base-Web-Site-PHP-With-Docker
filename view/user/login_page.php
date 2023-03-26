@@ -296,7 +296,11 @@
                 xhr.setRequestHeader('Content-Type', 'application/json');
             },
             success: function(data) {
-              alert(data.status)
+                if (data.status==="ok"){
+                    location.reload();
+                }else{
+                    alert(data.status)
+                }
             },
             error: function(xhr, status, error) {
                 var b2=document.getElementById("errr");
@@ -319,7 +323,11 @@
                 xhr.setRequestHeader('Content-Type', 'application/json');
             },
             success: function(data) {
-                alert(data.status)
+                if (data.status==="ok"){
+                    location.reload();
+                }else{
+                    alert(data.status)
+                }
             },
             error: function(xhr, status, error) {
                 var b2=document.getElementById("errr");

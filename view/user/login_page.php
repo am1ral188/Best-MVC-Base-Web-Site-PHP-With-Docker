@@ -296,7 +296,7 @@
                 xhr.setRequestHeader('Content-Type', 'application/json');
             },
             success: function(data) {
-              alert(data)
+              alert(data.status)
             },
             error: function(xhr, status, error) {
                 var b2=document.getElementById("errr");
@@ -319,7 +319,7 @@
                 xhr.setRequestHeader('Content-Type', 'application/json');
             },
             success: function(data) {
-                alert(data)
+                alert(data.status)
             },
             error: function(xhr, status, error) {
                 var b2=document.getElementById("errr");

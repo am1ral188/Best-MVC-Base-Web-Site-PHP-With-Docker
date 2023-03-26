@@ -46,8 +46,8 @@ public function find_in_sql_login($user_, $pass_) {
     // Prepare a statement
     $username =$user_;
     $password = password_hash($pass_, PASSWORD_DEFAULT);
-    $stmt = $conn->prepare("INSERT INTO users (username, pass) VALUES (?, ?)");
-    $stmt->bind_param("ss", $username, $password);
+    $stmt = $conn->prepare("INSERT INTO users (username, pass,acs) VALUES (?, ?,?)");
+    $stmt->bind_param("sss", $username, $password,"user");
 
 // Execute statement
     $stmt->execute();

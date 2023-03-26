@@ -1,5 +1,4 @@
 <?php
-
 $url = isset($_SERVER['PATH_INFO']) ? explode('/', ltrim($_SERVER['PATH_INFO'], '/')) : '/';
 include_once "config.php";
 include_once "helpers/cont.php";
@@ -12,7 +11,7 @@ if($url[0]==="/"){
 if (file_exists($aaa)){
     include_once $aaa;
     $cont=new  $url[0];
-if($url[1]!==""){
+if(isset($url[1])&&$url[1]!==""){
     if (method_exists($url[0],$url[1])){
 //        $reflection = new ReflectionFunction('');
 //        $params = $reflection->getParameters();

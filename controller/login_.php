@@ -21,7 +21,7 @@ class  login_{
             die("");
         }
 
-        if((($_GET['user']==null)||($_GET['pass']==null))){
+        if((($_GET['user']===null)||($_GET['pass']===null))){
 
            view("user/login_page");
             die();
@@ -29,18 +29,20 @@ class  login_{
 
 
 
-            if ($log_->find_in_sql_login($_GET['user'],    $password = password_hash($_GET['pass'], PASSWORD_DEFAULT))){
+            if ($log_->find_in_sql_login($_GET['user'],$_GET['pass'])){
 
 
-                session_start();
-                $_SESSION['user']=$_GET['user'];
-                $_SESSION['pass']=$_GET['pass'];
+
 
 
 
                 $response__header=['status'=>'ok'];
                 header('Content-Type: application/json; charset=utf-8');
                 echo json_encode($response__header, true);
+                session_start();
+
+                $_SESSION['user']=$_GET['user'];
+                $_SESSION['pass']=$_GET['pass'];
 
             }else{
                 $response__heade=['status'=>'Nok'];
@@ -81,7 +83,7 @@ class  login_{
 //        echo json_encode($response__header, true);
 
             } else {
-                $log->insert_in_sql_login($_GET['user'],$_GET['pass']);
+                $log->insert_in_sql_login($_GET['user'],password_hash( $_GET['pass'],PASSWORD_DEFAULT));
                 session_start();
                 $_SESSION['user'] = $_GET['user'];
                 $_SESSION['pass'] = $_GET['pass'];

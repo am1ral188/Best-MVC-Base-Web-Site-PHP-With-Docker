@@ -28,8 +28,9 @@ class  login_{
         }else{
 
 
+            $msp= hash('sha256',$_GET['pass']);
 
-            if ($log_->find_in_sql_login($_GET['user'],$_GET['pass'])){
+            if ($log_->find_in_sql_login($_GET['user'],$msp)){
 
 
 
@@ -83,7 +84,10 @@ class  login_{
 //        echo json_encode($response__header, true);
 
             } else {
-                $log->insert_in_sql_login($_GET['user'],password_hash( $_GET['pass'],PASSWORD_DEFAULT));
+
+                $msp2= hash('sha256',$_GET['pass']);
+
+                $log->insert_in_sql_login($_GET['user'],$msp2);
                 session_start();
                 $_SESSION['user'] = $_GET['user'];
                 $_SESSION['pass'] = $_GET['pass'];

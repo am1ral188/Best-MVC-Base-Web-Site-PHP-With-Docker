@@ -9,10 +9,10 @@ public function index(){
     else{
         $obj=new log_user();
         if ($obj->get_user_ac($_GET['user'])==='admin'){
-            view("pages/dash_admin");
+            view("dash_admin");
 
         }else{
-            view("pages/dash_user.php");
+            view("dash_user.php");
 
         }
 

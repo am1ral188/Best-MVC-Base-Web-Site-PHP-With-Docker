@@ -2,7 +2,7 @@
 class  login_{
    public function index(){
       if (!isset($_SESSION["user"])){
-          view("user/login_page");
+          view("login_page");
       }else{
           header("Location: ./dash");
       }
@@ -23,7 +23,7 @@ class  login_{
 
         if((($_GET['user']===null)||($_GET['pass']===null))){
 
-           view("user/login_page");
+           view("login_page");
             die();
         }else{
 
@@ -63,7 +63,7 @@ class  login_{
         }
         if (!(isset($_GET['user']) && isset($_GET['pass']))) {
 
-            view("user/login_page");
+            view("login_page");
             die();
         } else {
                 $log=new log_user();

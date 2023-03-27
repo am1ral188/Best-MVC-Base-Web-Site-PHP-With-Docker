@@ -1,1 +1,3 @@
-<p>adm</p>
+<p>
+  access:  <?=(is_adm() ? "Admin" : "User");?>
+</p>

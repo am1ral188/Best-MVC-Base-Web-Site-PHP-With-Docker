@@ -114,6 +114,36 @@ function get_user_ac($usr_name):string{
     $_query__r=mysqli_fetch_assoc($result);
     return $_query__r['acs'];
    }
+
+    public function update_pass($username_, $pass, $newusername_, $newpass)
+    {
+        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $stmt = $conn->prepare("UPDATE users SET username = ?, pass= ? WHERE username = ? AND pass= ?;");
+        $stmt->bind_param("ssss", $newusername_,$newpass,$username_,$pass);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conn->close();
+    }
+
+    public function update_profile($username_, $pass, $img_addr)
+    {
+        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $stmt = $conn->prepare("UPDATE users SET profile_image= ? WHERE username = ? AND pass= ?;");
+        $stmt->bind_param("sss", $img_addr,$username_,$pass);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conn->close();
+    }
 }
 
-?>
+

@@ -1,4 +1,12 @@
-<!doctype html>
+<?php
+
+
+if(isset($_SESSION['user'])){
+    include_once "../config.php";
+    header('Location : '.site_root.'dash');
+    die();
+}
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,10 +15,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+        @import url("https://fonts.googleapis.com/css?family=Fira+Sans");
+
         #errr,#errr2{
             opacity:0
         }
-        @import url("https://fonts.googleapis.com/css?family=Fira+Sans");
+
         html, body {
             position: relative;
             min-height: 100vh;
@@ -97,8 +107,8 @@
             outline: none;
             box-shadow: none;
             display: block;
-            height: 30px;
-            line-height: 30px;
+            height: 40px;
+            line-height: 40px;
             padding: 8px 15px;
             border-bottom: 1px solid #eee;
             width: 100%;
@@ -188,8 +198,8 @@
             outline: none;
             box-shadow: none;
             display: block;
-            height: 30px;
-            line-height: 30px;
+            height: 40px;
+            line-height: 40px;
             padding: 8px 15px;
             border-bottom: 1px solid #eee;
             width: 100%;
@@ -248,7 +258,9 @@
             visibility: visible;
             -webkit-transition: all 0.3s ease;
         }
-
+            .input{
+                height:40px;
+            }
     </style>
 </head>
 <body>

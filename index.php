@@ -17,10 +17,10 @@ if ($url[0] === "/") {
         $pa = ($fa === "" ? "index" : $fa);
         if (method_exists($url[0], $pa)) {
             call_user_func(array($cont, $pa));
-        }else{
+        } else {
             echo err404();
         }
-    } else{
+    } else {
         echo err404();
     }
 

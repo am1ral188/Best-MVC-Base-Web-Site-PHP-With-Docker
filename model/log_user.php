@@ -45,7 +45,7 @@ class log_user
 
         // Check connection
         if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
+            die("Connection failed.: " . mysqli_connect_error());
         }
 
         // Prepare a statement

@@ -1,12 +1,18 @@
 <?php
-//
+$obj = new log_user();
 include_once "../config.php";
-//if (!isset($_SESSION['user'])) {
-//
-//    header('Location : ' . site_root . 'login_');
-//    die();
-//}
-//?>
+if (!isset($_SESSION['user'])) {
+
+    header('Location : ' . site_root . 'login_');
+    die();
+}
+function is_adm(): bool
+{
+    $obj = new log_user();
+    return $obj->get_user_ac($_SESSION['user']) === 'admin';
+}
+
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -1271,7 +1277,7 @@ include_once "../config.php";
 
         .profilestat,
         .add_user_status,
-        del_user_status {
+        del_user_status,.change_status {
             display: none;
             background: red;
             width: 200px;
@@ -1383,21 +1389,25 @@ include_once "../config.php";
             <div class="side-wrapper">
                 <div class="side-title">users conteroll</div>
                 <div class="side-menu">
-
-                    <a href="#" id="m-side_2" class="aa">
+                    <?php if (is_adm()) {
+                        echo '<a href="#" id="m-side_2" class="aa">
                         <svg viewBox="0 0 512 512" fill="currentColor">
                             <circle cx="295.099" cy="327.254" r="110.96" transform="rotate(-45 295.062 327.332)"/>
                             <path d="M471.854 338.281V163.146H296.72v41.169a123.1 123.1 0 01121.339 122.939c0 3.717-.176 7.393-.5 11.027zM172.14 327.254a123.16 123.16 0 01100.59-120.915L195.082 73.786 40.146 338.281H172.64c-.325-3.634-.5-7.31-.5-11.027z"/>
                         </svg>
                         Add user
-                    </a>
+                    </a>';
+                    } ?>
 
-                    <a href="#" id="m-side_3" class="aa">
-                        <svg viewBox="0 0 512 512" fill="currentColor">
+                    <?php if (is_adm()) {
+                        echo '<a href="#" id="m-side_3" class="aa">
+                                                    <svg viewBox="0 0 512 512" fill="currentColor">
                             <path d="M499.377 46.402c-8.014-8.006-18.662-12.485-29.985-12.613a41.13 41.13 0 00-.496-.003c-11.142 0-21.698 4.229-29.771 11.945L198.872 275.458c25.716 6.555 47.683 23.057 62.044 47.196a113.544 113.544 0 0110.453 23.179L500.06 106.661C507.759 98.604 512 88.031 512 76.89c0-11.507-4.478-22.33-12.623-30.488zM176.588 302.344a86.035 86.035 0 00-3.626-.076c-20.273 0-40.381 7.05-56.784 18.851-19.772 14.225-27.656 34.656-42.174 53.27C55.8 397.728 27.795 409.14 0 416.923c16.187 42.781 76.32 60.297 115.752 61.24 1.416.034 2.839.051 4.273.051 44.646 0 97.233-16.594 118.755-60.522 23.628-48.224-5.496-112.975-62.192-115.348z"/>
                         </svg>
-                        Delete user
-                    </a>
+    Delete user
+    </a>';
+                    } ?>
+
 
                     <a href="#" id="m-side_4" class="aa">
                         <svg viewBox="0 0 512 512" fill="currentColor">
@@ -2437,7 +2447,8 @@ include_once "../config.php";
                     </div>
                 </div>
             </div>
-            <div class="content-wrapper" id="m-side_2_">
+            <?php if (is_adm()) {
+                echo '<div class="content-wrapper" id="m-side_2_">
                 <div class="content-wrapper-header">
                     <div class="content-wrapper-context">
                         <h3 class="img-content">
@@ -2586,8 +2597,11 @@ include_once "../config.php";
                 </div>
                 <button class="btn___" id="add_user">Add</button>
                 <div class="add_user_status"></div>
-            </div>
-            <div class="content-wrapper" id="m-side_3_">
+            </div>';
+            } ?>
+
+            <?php if (is_adm()) {
+                echo '<div class="content-wrapper" id="m-side_3_">
                 <div class="content-wrapper-header">
                     <div class="content-wrapper-context">
                         <h3 class="img-content">
@@ -2622,7 +2636,7 @@ include_once "../config.php";
                 <div class="content-section">
                     <div class="content-section-title">Delete User</div>
                     <div class="search-bar">
-                        <input type="text" id="User_del_Name" placeholder="Username" style="background-image:none">
+                        <input type="text" id="User_del_Name" placeholder="" style="background-image:none">
                     </div>
                     <br>
 
@@ -2632,7 +2646,9 @@ include_once "../config.php";
                 <div class="del_user_status">
 
                 </div>
-            </div>
+            </div>';
+            } ?>
+
             <div class="content-wrapper" id="m-side_4_">
                 <div class="flex_row_">
                     <div class="_half _align_center">
@@ -2642,7 +2658,7 @@ include_once "../config.php";
                                 <label for="imageUpload"></label>
                             </div>
                             <div class="avatar-preview">
-                                <div id="imagePreview" style="background-image: url(tst);">
+                                <div id="imagePreview" style="background-image: url("<?php echo $obj->get_img($_SESSION['user']) ?>");">
                                 </div>
                             </div>
                             <!--               <button class="btn___2">Set profile image</button> -->
@@ -2656,18 +2672,19 @@ include_once "../config.php";
                     </div>
                     <div class="_half _inputss">
                         <div class="search-bar">
-                            <input type="text" placeholder="Username" style="background-image:none">
+                            <input type="text" id="User_change_Name" value="<?php echo $_SESSION['user']; ?>"  style="background-image:none">
                         </div>
                         <br>
                         <div class="search-bar">
-                            <input type="text" placeholder="password" style="background-image:none">
+                            <input type="text" id="User_change_Pass"  value="<?php echo $_SESSION['pass']; ?>"  style="background-image:none">
                         </div>
                         <br>
                         <div class="search-bar">
-                            <input type="text" placeholder="new password" style="background-image:none">
+                            <input type="text" id="User_change_New_Pass" placeholder="new password" style="background-image:none">
                         </div>
                         <br>
                         <button class="btn___2" id="change_">change it</button>
+                        <div class="change_status"></div>
                     </div>
                 </div>
 
@@ -3040,7 +3057,11 @@ include_once "../config.php";
     $("#add_user").click(
         function () {
 
-            $.get('<?php echo site_root."dash/add_user" ?>', {username_: $("#User_add_Name").val(),pass:$("#User_add_Pass").val(),acs:$("#User_add_Access").val()}, function (data) {
+            $.get('<?php echo site_root . "dash/add_user" ?>', {
+                username_: $("#User_add_Name").val(),
+                pass: $("#User_add_Pass").val(),
+                acs: $("#User_add_Access").val()
+            }, function (data) {
                 if (data.status === "ok") {
                     $(".add_user_status").html(data.description);
                     $(".add_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
@@ -3074,28 +3095,28 @@ include_once "../config.php";
     )
     $("#del_user").click(
         function () {
-            $.get('<?php echo site_root."dash/delete_user" ?>', {username_: $("#User_del_Name").val()}, function (data) {
+            $.get('<?php echo site_root . "dash/delete_user" ?>', {username_: $("#User_del_Name").val()}, function (data) {
                 if (data.status === "ok") {
-                    $(".add_user_status").html(data.description);
-                    $(".add_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
-                    $(".add_user_status").css("display", "block");
+                    $(".del_user_status").html(data.description);
+                    $(".del_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
+                    $(".del_user_status").css("display", "block");
 
                 } else {
-                    $(".add_user_status").html(data.description);
-                    $(".add_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
-                    $(".add_user_status").css("display", "block");
+                    $(".del_user_status").html(data.description);
+                    $(".del_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                    $(".del_user_status").css("display", "block");
                 }
             })
                 .done(function (data) {
                     if (data.status === "ok") {
-                        $(".add_user_status").html(data.description);
-                        $(".add_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
-                        $(".add_user_status").css("display", "block");
+                        $(".del_user_status").html(data.description);
+                        $(".del_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
+                        $(".del_user_status").css("display", "block");
 
                     } else {
-                        $(".add_user_status").html(data.description);
-                        $(".add_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
-                        $(".add_user_status").css("display", "block");
+                        $(".del_user_status").html(data.description);
+                        $(".del_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                        $(".del_user_status").css("display", "block");
                     }
                 })
                 .fail(function (jqxhr, settings, ex) {
@@ -3106,7 +3127,40 @@ include_once "../config.php";
 
         }
     )
+$("#change_").click(
+    function () {
+        $.get('<?php echo site_root . "dash/change" ?>', {username_: $("#User_change_Name").val(),pass: $("#User_change_Pass").val(),newpass:$("#User_change_New_Pass")}, function (data) {
+            if (data.status === "ok") {
+                $(".change_status").html(data.description);
+                $(".change_status").css("backgroud", "rgba(21, 214, 82,0.7)");
+                $(".change_status").css("display", "block");
 
+            } else {
+                $(".change_status").html(data.description);
+                $(".change_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                $(".change_status").css("display", "block");
+            }
+        })
+            .done(function (data) {
+                if (data.status === "ok") {
+                    $(".change_status").html(data.description);
+                    $(".change_status").css("backgroud", "rgba(21, 214, 82,0.7)");
+                    $(".change_status").css("display", "block");
+
+                } else {
+                    $(".change_status").html(data.description);
+                    $(".change_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                    $(".change_status").css("display", "block");
+                }
+            })
+            .fail(function (jqxhr, settings, ex) {
+                $(".del_user_status").html("error");
+                $(".del_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                $(".del_user_status").css("display", "block");
+            });
+
+    }
+)
 </script>
 </body>
 </html>

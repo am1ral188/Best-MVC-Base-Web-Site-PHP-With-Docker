@@ -216,6 +216,23 @@ class log_user
         $stmt->close();
         $conn->close();
     }
+
+
+public function get_img($usr_name):string{
+    $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
+    $stmt->bind_param("s", $usr_name);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+    $conn->close();
+    $_query__r = mysqli_fetch_assoc($result);
+    return $_query__r['profile_img_path'];
+
 }
-
-
+}

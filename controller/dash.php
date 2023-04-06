@@ -10,11 +10,7 @@ class dash
             die();
         } else {
 
-            function is_adm(): bool
-            {
-                $obj = new log_user();
-                return $obj->get_user_ac($_SESSION['user']) === 'admin';
-            }
+
 
             view("dash_admin");
         }
@@ -94,6 +90,8 @@ class dash
 
     public function change()
     {
+        header('Content-Type: application/json; charset=utf-8');
+
         if (!isset($_SESSION['user'])) {
             die("go lose ");
         }
@@ -105,15 +103,15 @@ class dash
         (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,22}$/', $pass) ?: $this->err_do_not_true_value("bad value"));
         $newpass = $_GET['newpass'] ?? $this->err_do_not_true_value("bad value");
         (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,22}$/', $newpass) ?: $this->err_do_not_true_value("bad value"));
-        if ($objsql->find_in_sql_login($_SESSION['user'], $pass)) {
+        if ($objsql->find_in_sql_login($_SESSION['user'],hash('sha256',$pass) )) {
             if (!$objsql->find_in_sql_login2($newusername_)){
-                $objsql->update_pass($_SESSION['user'], $pass, $newusername_, $newpass);
+                $objsql->update_pass($_SESSION['user'], hash('sha256',$pass), $newusername_, hash('sha256',$newpass));
             }else{
-                echo "a";
+                echo json_encode(['status'=>"Nok","description"=>"user already exist"]);
             }
 
         }else{
-            echo "b";
+            echo json_encode(['status'=>"Nok","description"=>"password is not right "]);
         }
     }
 

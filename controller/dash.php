@@ -79,7 +79,7 @@ class dash
 // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-                echo json_encode(["status" => "Ok", "description" => "image saved"]);
+                echo json_encode(["status" => "ok", "description" => "image saved"]);
                 $objsqlup = new log_user();
                 $objsqlup->update_profile($_SESSION['user'], $_SESSION['pass'], $target_file);
                 $img = new Imagick($target_file);
@@ -123,20 +123,18 @@ class dash
             die("go lose ");
         }
         $objsql = new log_user();
-        $username_ = $_GET['username_'] ?? $this->err_do_not_true_value("bad value");
-        (!preg_match("/^[a-z\d_]{2,20}$/i", $username_) ?: $this->err_do_not_true_value("bad value"));
-        $acs = $_GET['username_'] ?? $this->err_do_not_true_value("bad value");
+
+        $acs = $_GET['acs'] ?? $this->err_do_not_true_value("bad value");
         (!preg_match("/^[a-z\d_]{2,20}$/i", $acs) ?: $this->err_do_not_true_value());
         $newusername_ = $_GET['username_'] ?? $this->err_do_not_true_value("bad value");
         (!preg_match("/^[a-z\d_]{2,20}$/i", $newusername_) ?: $this->err_do_not_true_value("bad value"));
         $pass = $_GET['pass'] ?? $this->err_do_not_true_value("bad value");
         (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,22}$/', $pass) ?: $this->err_do_not_true_value());
-        $newpass = $_GET['newpass'] ?? $this->err_do_not_true_value("bad value");
-        (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,22}$/', $newpass) ?: $this->err_do_not_true_value("bad value"));
+
         if ($objsql->find_in_sql_login2($username_)) {
             $this->err_do_not_true_value("user already exist");
         } else {
-            $objsql->insert_in_sql($newusername_, $newpass,$acs);
+            $objsql->insert_in_sql($newusername_, $pass,$acs);
             header("Content-Type: application/json");
             echo json_encode(["status"=>"ok","description"=>"user inserted "]);
         }
@@ -153,11 +151,13 @@ class dash
         (!preg_match("/^[a-z\d_]{2,20}$/i", $username_) ?: $this->err_do_not_true_value("bad value"));
 
 
-        if ($objsql->find_in_sql_login2($username_)) {
+        if ($objsql->find_in_sql_login2($username_)&&$_SESSION['user']!=$username_) {
             $objsql->delete_from_sql_dash_adm($username_);
-        } else {
             header("Content-Type: application/json");
             echo json_encode(["status"=>"ok","description"=>"user deleted "]);
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode(["status"=>"Nok","description"=>"user not deleted "]);
         }
     }
 }

@@ -300,7 +300,7 @@ if(isset($_SESSION['user'])){
         const password = document.getElementById('pass').value;
         const username = document.getElementById('user').value;
         $.ajax({
-            url: '<?php echo site_root."login_/signup"; ?>',
+            url: '<?php echo site_root."login/signup"; ?>',
             method: 'GET',
             dataType: 'json',
             data: {user:username,pass: password }, // this will be converted to JSON automatically
@@ -327,7 +327,7 @@ if(isset($_SESSION['user'])){
         const password = document.getElementById('pass2').value;
         const username = document.getElementById('user2').value;
         $.ajax({
-            url: '<?php echo site_root."login_/login"; ?>',
+            url: '<?php echo site_root."login/login"; ?>',
             method: 'GET',
             dataType: 'json',
             data: {"user":username,"pass": password }, // this will be converted to JSON automatically

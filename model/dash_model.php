@@ -1,6 +1,6 @@
 <?php
 
-class log_user
+class dash_model
 {
     public function find_in_sql_login($user_, $pass_): bool
     {
@@ -85,7 +85,7 @@ class log_user
         }
 
         // Prepare a statement
-        $stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE username = ? ");
+        $stmt = mysqli_prepare($conn, "DELETE FROM users WHERE username = ? ");
 
         // Bind parameters
         mysqli_stmt_bind_param($stmt, "s", $user_);

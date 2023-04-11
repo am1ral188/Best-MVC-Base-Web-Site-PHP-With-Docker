@@ -22,7 +22,7 @@
 <?php
 
 //if (!isset($_SESSION["user"])){
-//    header("Location: ".site_root."login_");
+//    header("Location: ".site_root."login");
 //    die();
 //}
 $date = new DateTime('2000-01-01');

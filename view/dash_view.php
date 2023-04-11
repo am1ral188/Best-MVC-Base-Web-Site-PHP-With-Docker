@@ -1,15 +1,16 @@
 <?php
-$obj = new log_user();
+
 include_once "../config.php";
+include_once __DIR__."../model/dash_model.php";
 if (!isset($_SESSION['user'])) {
 
-    header('Location : ' . site_root . 'login_');
+    header('Location : ' . site_root . 'login');
     die();
 }
+$obj = new  dash_model();
 function is_adm(): bool
-{
-    $obj = new log_user();
-    return $obj->get_user_ac($_SESSION['user']) === 'admin';
+{$obj2 = new  dash_model();
+    return $obj2->get_user_ac($_SESSION['user']) === 'admin';
 }
 
 ?>
@@ -20,6 +21,10 @@ function is_adm(): bool
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+        #dr-bt{
+            width: 90px;
+            height: 30px;
+        }
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
         * {
@@ -1287,6 +1292,290 @@ function is_adm(): bool
         }
 
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+        $("#log_out_btn").click(function (){
+            location.href='<?php echo site_root."dash/log_out"; ?>';
+        });
+
+            $(function () {
+                $(".menu-link").click(function () {
+                    $(".menu-link").removeClass("is-active");
+                    $(this).addClass("is-active");
+                });
+            });
+            $(function () {
+                $(".main-header-link").click(function () {
+                    $(".main-header-link").removeClass("is-active");
+                    $(this).addClass("is-active");
+                });
+            });
+            const dropdowns = document.querySelectorAll(".dropdown");
+            dropdowns.forEach((dropdown) => {
+                dropdown.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    dropdowns.forEach((c) => c.classList.remove("is-active"));
+                    dropdown.classList.add("is-active");
+                });
+            });
+            $("#search-bar input")
+                .focus(function () {
+                    $(".header").addClass("wide");
+                })
+                .blur(function () {
+                    $(".header").removeClass("wide");
+                });
+            $(document).click(function (e) {
+                var container = $(".status-button");
+                var dd = $(".dropdown");
+                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                    dd.removeClass("is-active");
+                }
+            });
+            $(function () {
+                $(".dropdown").on("click", function (e) {
+                    $(".content-wrapper").addClass("overlay");
+                    e.stopPropagation();
+                });
+                $(document).on("click", function (e) {
+                    if ($(e.target).is(".dropdown") === false) {
+                        $(".content-wrapper").removeClass("overlay");
+                    }
+                });
+            });
+            $(".content-button.status-button").click(function () {
+                $(".pu").addClass("visible");
+                $(".overlay-app").addClass("is-active");
+            });
+            $(".pu .close").click(function () {
+                $(".pu").removeClass("visible");
+                $(".overlay-app").removeClass("is-active");
+            });
+            const toggleButton = document.querySelector(".dark-light");
+            toggleButton.addEventListener("click", () => {
+                document.body.classList.toggle("light-mode");
+                // document.querySelectorAll(".dr-bt").id.toggle("dr-bt");
+                // if($(".dr-bt").css("background")!="rgba(250,250,250,0.7)"){
+                //   $(".dr-bt").css("background","rgba(250,250,250,0.7)");
+                //  $(".dr-bt").css("color","rgba(2,2,2,0.9)");
+                // }else{
+                // $(".dr-bt").css("background","rgba(11,11,11,0.7)");
+                //  $(".dr-bt").css("color","rgba(210,21,211,0.9)");}
+            });
+            document.getElementById("op").addEventListener("click", function () {
+                if (document.getElementById("les").style.display != "block") {
+                    document.getElementById("les").style.display = "block";
+                } else {
+                    document.getElementById("les").style.display = "none";
+                }
+            });
+            $(".main-header-link").click(function () {
+                $(".side-menu a").removeClass("ace");
+                let str = $(this).attr("id");
+                str = str.substr(0, str.length - 1);
+                $(".content-wrapper").css("display", "none");
+                $("#" + str).css("display", "block");
+            });
+            $("#pro").click(function () {
+                if ($(".dr-con").css("display") === "none") {
+                    $(".dr-con").css("display", "block");
+                } else {
+                    $(".dr-con").css("display", "none");
+                }
+            });
+            $(".side-menu a").click(function () {
+                $(".side-menu a").removeClass("ace");
+                $(this).addClass("ace");
+            });
+            $("#alll").click(function () {
+                $(".main-header-link").removeClass("is-active");
+                $(".main-header-link:first-child").addClass("is-active");
+                $(".content-wrapper").css("display", "none");
+                $(".show").css("display", "block");
+            });
+            $(".side-menu .aa").click(function () {
+                $(".main-header-link").removeClass("is-active");
+                let str = $(this).attr("id");
+                str = str + "_";
+                $(".content-wrapper").css("display", "none");
+                $("#" + str).css("display", "block");
+            });
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imagePreview").css(
+                            "background-image",
+                            "url(" + e.target.result + ")"
+                        );
+                        $("#imagePreview").hide();
+                        $("#imagePreview").fadeIn(650);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#imageUpload").change(function () {
+                var input=document.querySelector('#imageUpload');
+                var reader = new FileReader();
+                reader.onload = function (e) {
+
+                    $(".avatar-preview").css(
+                        "background-image",
+                        "url(" + e.target.result + ")"
+                    );
+                    $(".avatar-preview").hide();
+                    $(".avatar-preview").fadeIn(650);
+                };
+                reader.readAsDataURL(input.files[0]);
+                let fileInput = document.querySelector("#imageUpload");
+
+                // Create a new form data instance and append the file to it
+                let formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+
+                // Send the file to the server with AJAX
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', "<?php echo site_root . "dash/profile_image"?>");
+                xhr.send(formData);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        if (xhr.response.status === "ok") {
+                            $(".profilestat").html(xhr.response.description);
+                            $(".profilestat").css("backgroud", "rgba(21, 214, 82,0.7)");
+                            $(".profilestat").css("display", "block");
+
+                        } else {
+                            $(".profilestat").html(xhr.response.description);
+                            $(".profilestat").css("backgroud", "rgba(241, 23, 12,0.7)");
+                            $(".profilestat").css("display", "block");
+                        }
+                    }
+
+                }
+            });
+            <?php
+            if(is_adm()){
+                echo ' $("#add_user").click(
+                function () {
+
+                    $.get("'.site_root . 'dash/add_user"'.', {
+            username_: $("#User_add_Name").val(),
+                pass: $("#User_add_Pass").val(),
+                acs: $("#User_add_Access").val()
+        }, function (data) {
+            if (data.status === "ok") {
+                $(".add_user_status").html(data.description);
+                $(".add_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
+                $(".add_user_status").css("display", "block");
+
+            } else {
+                $(".add_user_status").html(data.description);
+                $(".add_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                $(".add_user_status").css("display", "block");
+            }
+        })
+            .done(function (data) {
+                if (data.status === "ok") {
+                    $(".add_user_status").html(data.description);
+                    $(".add_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
+                    $(".add_user_status").css("display", "block");
+
+                } else {
+                    $(".add_user_status").html(data.description);
+                    $(".add_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                    $(".add_user_status").css("display", "block");
+                }
+            })
+            .fail(function (jqxhr, settings, ex) {
+                $(".add_user_status").html("error");
+                $(".add_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                $(".add_user_status").css("display", "block");
+            });
+
+        }
+        )';
+            }
+            ?>
+
+           <?php
+            if(is_adm()){
+                echo '$("#del_user").click(
+                function () {
+                    $.get("'.site_root . "dash/delete_user" .'", {username_: $("#User_del_Name").val()}, function (data) {
+                        if (data.status === "ok") {
+                            $(".del_user_status").html(data.description);
+                            $(".del_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
+                            $(".del_user_status").css("display", "block");
+
+                        } else {
+                            $(".del_user_status").html(data.description);
+                            $(".del_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                            $(".del_user_status").css("display", "block");
+                        }
+                    })
+                        .done(function (data) {
+                            if (data.status === "ok") {
+                                $(".del_user_status").html(data.description);
+                                $(".del_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
+                                $(".del_user_status").css("display", "block");
+
+                            } else {
+                                $(".del_user_status").html(data.description);
+                                $(".del_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                                $(".del_user_status").css("display", "block");
+                            }
+                        })
+                        .fail(function (jqxhr, settings, ex) {
+                            $(".del_user_status").html("error");
+                            $(".del_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                            $(".del_user_status").css("display", "block");
+                        });
+
+                }
+            )';
+            }
+            ?>
+
+            $("#change_").click(
+                function () {
+                    $.get('<?php echo site_root . "dash/change" ?>', { username_: $("#User_change_Name").val(),
+                        pass: $("#User_change_Pass").val(),
+                        newpass: $("#User_change_New_Pass").val()}, function (data) {
+                        if (data.status === "ok") {
+                            $(".change_status").html(data.description);
+                            $(".change_status").css("backgroud", "rgba(21, 214, 82,0.7)");
+                            $(".change_status").css("display", "block");
+
+                        } else {
+                            $(".change_status").html(data.description);
+                            $(".change_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                            $(".change_status").css("display", "block");
+                        }
+                    })
+                        .done(function (data) {
+                            if (data.status === "ok") {
+                                $(".change_status").html(data.description);
+                                $(".change_status").css("backgroud", "rgba(21, 214, 82,0.7)");
+                                $(".change_status").css("display", "block");
+
+                            } else {
+                                $(".change_status").html(data.description);
+                                $(".change_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                                $(".change_status").css("display", "block");
+                            }
+                        })
+                        .fail(function (jqxhr, settings, ex) {
+                            $(".del_user_status").html("error");
+                            $(".del_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
+                            $(".del_user_status").css("display", "block");
+                        });
+
+                }
+            )})
+    </script>
 </head>
 <body>
 <div class="pop-up pu">
@@ -1308,7 +1597,7 @@ function is_adm(): bool
     </div>
     <div class="content-button-wrapper">
         <button class="content-button status-button open close">Cancel</button>
-        <button class="content-button status-button">Continue</button>
+        <button class="content-button status-button" id="log_out_btn">Continue</button>
     </div>
 </div>
 <div class="video-bg">
@@ -1409,7 +1698,7 @@ function is_adm(): bool
                     } ?>
 
 
-                    <a href="#" id="m-side_4" class="aa">
+                    <a href="#" id="m-side_144" class="aa">
                         <svg viewBox="0 0 512 512" fill="currentColor">
                             <path d="M0 331v112.295a14.996 14.996 0 007.559 13.023L106 512V391L0 331zM136 391v121l105-60V331zM271 331v121l105 60V391zM406 391v121l98.441-55.682A14.995 14.995 0 00512 443.296V331l-106 60zM391 241l-115.754 57.876L391 365.026l116.754-66.15zM262.709 1.583a15.006 15.006 0 00-13.418 0L140.246 57.876 256 124.026l115.754-66.151L262.709 1.583zM136 90v124.955l105 52.5V150zM121 241L4.246 298.876 121 365.026l115.754-66.15zM271 150v117.455l105-52.5V90z"/>
                         </svg>
@@ -1679,6 +1968,8 @@ function is_adm(): bool
                     <img class="content-wrapper-img" src="https://assets.codepen.io/3364143/glass.png" alt="">
                 </div>
                 <div class="content-section">
+
+
                     <div class="content-section-title">Installed</div>
                     <ul>
                         <li class="adobe-product">
@@ -2649,7 +2940,7 @@ function is_adm(): bool
             </div>';
             } ?>
 
-            <div class="content-wrapper" id="m-side_4_">
+            <div class="content-wrapper" id="m-side_144_">
                 <div class="flex_row_">
                     <div class="_half _align_center">
                         <div class="avatar-upload">
@@ -2668,29 +2959,27 @@ function is_adm(): bool
                             </div>
 
                         </div>
-
-                    </div>
                     <div class="_half _inputss">
                         <div class="search-bar">
                             <input type="text" id="User_change_Name" value="<?php echo $_SESSION['user']; ?>"  style="background-image:none">
                         </div>
                         <br>
                         <div class="search-bar">
-                            <input type="text" id="User_change_Pass"  value="<?php echo $_SESSION['pass']; ?>"  style="background-image:none">
+                            <input type="password" id="User_change_Pass"  value="<?php echo $_SESSION['pass']; ?>"  style="background-image:none">
                         </div>
                         <br>
                         <div class="search-bar">
-                            <input type="text" id="User_change_New_Pass" placeholder="new password" style="background-image:none">
+                            <input type="password" id="User_change_New_Pass" value="<?php echo $_SESSION['pass'] ?>" style="background-image:none">
                         </div>
                         <br>
                         <button class="btn___2" id="change_">change it</button>
                         <div class="change_status"></div>
                     </div>
-                </div>
-
-                <div class="content-section">
+                    </div>
 
                 </div>
+
+
             </div>
             <div class="content-wrapper" id="m-side_6_">
                 <div class="content-wrapper-header">
@@ -2902,265 +3191,9 @@ function is_adm(): bool
 
     </div>
     <div class="overlay-app"></div>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
-</script>
 
 
-<script>
-    $(function () {
-        $(".menu-link").click(function () {
-            $(".menu-link").removeClass("is-active");
-            $(this).addClass("is-active");
-        });
-    });
-    $(function () {
-        $(".main-header-link").click(function () {
-            $(".main-header-link").removeClass("is-active");
-            $(this).addClass("is-active");
-        });
-    });
-    const dropdowns = document.querySelectorAll(".dropdown");
-    dropdowns.forEach((dropdown) => {
-        dropdown.addEventListener("click", (e) => {
-            e.stopPropagation();
-            dropdowns.forEach((c) => c.classList.remove("is-active"));
-            dropdown.classList.add("is-active");
-        });
-    });
-    $("#search-bar input")
-        .focus(function () {
-            $(".header").addClass("wide");
-        })
-        .blur(function () {
-            $(".header").removeClass("wide");
-        });
-    $(document).click(function (e) {
-        var container = $(".status-button");
-        var dd = $(".dropdown");
-        if (!container.is(e.target) && container.has(e.target).length === 0) {
-            dd.removeClass("is-active");
-        }
-    });
-    $(function () {
-        $(".dropdown").on("click", function (e) {
-            $(".content-wrapper").addClass("overlay");
-            e.stopPropagation();
-        });
-        $(document).on("click", function (e) {
-            if ($(e.target).is(".dropdown") === false) {
-                $(".content-wrapper").removeClass("overlay");
-            }
-        });
-    });
-    $(".content-button.status-button").click(function () {
-        $(".pu").addClass("visible");
-        $(".overlay-app").addClass("is-active");
-    });
-    $(".pu .close").click(function () {
-        $(".pu").removeClass("visible");
-        $(".overlay-app").removeClass("is-active");
-    });
-    const toggleButton = document.querySelector(".dark-light");
-    toggleButton.addEventListener("click", () => {
-        document.body.classList.toggle("light-mode");
-        // document.querySelectorAll(".dr-bt").id.toggle("dr-bt");
-        // if($(".dr-bt").css("background")!="rgba(250,250,250,0.7)"){
-        //   $(".dr-bt").css("background","rgba(250,250,250,0.7)");
-        //  $(".dr-bt").css("color","rgba(2,2,2,0.9)");
-        // }else{
-        // $(".dr-bt").css("background","rgba(11,11,11,0.7)");
-        //  $(".dr-bt").css("color","rgba(210,21,211,0.9)");}
-    });
-    document.getElementById("op").addEventListener("click", function () {
-        if (document.getElementById("les").style.display != "block") {
-            document.getElementById("les").style.display = "block";
-        } else {
-            document.getElementById("les").style.display = "none";
-        }
-    });
-    $(".main-header-link").click(function () {
-        $(".side-menu a").removeClass("ace");
-        let str = $(this).attr("id");
-        str = str.substr(0, str.length - 1);
-        $(".content-wrapper").css("display", "none");
-        $("#" + str).css("display", "block");
-    });
-    $("#pro").click(function () {
-        if ($(".dr-con").css("display") === "none") {
-            $(".dr-con").css("display", "block");
-        } else {
-            $(".dr-con").css("display", "none");
-        }
-    });
-    $(".side-menu a").click(function () {
-        $(".side-menu a").removeClass("ace");
-        $(this).addClass("ace");
-    });
-    $("#alll").click(function () {
-        $(".main-header-link").removeClass("is-active");
-        $(".main-header-link:first-child").addClass("is-active");
-        $(".content-wrapper").css("display", "none");
-        $(".show").css("display", "block");
-    });
-    $(".side-menu .aa").click(function () {
-        $(".main-header-link").removeClass("is-active");
-        let str = $(this).attr("id");
-        str = str + "_";
-        $(".content-wrapper").css("display", "none");
-        $("#" + str).css("display", "block");
-    });
 
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $("#imagePreview").css(
-                    "background-image",
-                    "url(" + e.target.result + ")"
-                );
-                $("#imagePreview").hide();
-                $("#imagePreview").fadeIn(650);
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
 
-    $("#imageUpload").change(function () {
-        readURL(this);
-        let fileInput = document.querySelector("#imageUpload");
-
-        // Create a new form data instance and append the file to it
-        let formData = new FormData();
-        formData.append('file', fileInput.files[0]);
-
-        // Send the file to the server with AJAX
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', "<?php echo site_root . "dash/profile_image"?>");
-        xhr.send(formData);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                if (xhr.response.status === "ok") {
-                    $(".profilestat").html(xhr.response.description);
-                    $(".profilestat").css("backgroud", "rgba(21, 214, 82,0.7)");
-                    $(".profilestat").css("display", "block");
-
-                } else {
-                    $(".profilestat").html(xhr.response.description);
-                    $(".profilestat").css("backgroud", "rgba(241, 23, 12,0.7)");
-                    $(".profilestat").css("display", "block");
-                }
-            }
-
-        }
-    });
-    $("#add_user").click(
-        function () {
-
-            $.get('<?php echo site_root . "dash/add_user" ?>', {
-                username_: $("#User_add_Name").val(),
-                pass: $("#User_add_Pass").val(),
-                acs: $("#User_add_Access").val()
-            }, function (data) {
-                if (data.status === "ok") {
-                    $(".add_user_status").html(data.description);
-                    $(".add_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
-                    $(".add_user_status").css("display", "block");
-
-                } else {
-                    $(".add_user_status").html(data.description);
-                    $(".add_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
-                    $(".add_user_status").css("display", "block");
-                }
-            })
-                .done(function (data) {
-                    if (data.status === "ok") {
-                        $(".add_user_status").html(data.description);
-                        $(".add_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
-                        $(".add_user_status").css("display", "block");
-
-                    } else {
-                        $(".add_user_status").html(data.description);
-                        $(".add_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
-                        $(".add_user_status").css("display", "block");
-                    }
-                })
-                .fail(function (jqxhr, settings, ex) {
-                    $(".add_user_status").html("error");
-                    $(".add_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
-                    $(".add_user_status").css("display", "block");
-                });
-
-        }
-    )
-    $("#del_user").click(
-        function () {
-            $.get('<?php echo site_root . "dash/delete_user" ?>', {username_: $("#User_del_Name").val()}, function (data) {
-                if (data.status === "ok") {
-                    $(".del_user_status").html(data.description);
-                    $(".del_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
-                    $(".del_user_status").css("display", "block");
-
-                } else {
-                    $(".del_user_status").html(data.description);
-                    $(".del_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
-                    $(".del_user_status").css("display", "block");
-                }
-            })
-                .done(function (data) {
-                    if (data.status === "ok") {
-                        $(".del_user_status").html(data.description);
-                        $(".del_user_status").css("backgroud", "rgba(21, 214, 82,0.7)");
-                        $(".del_user_status").css("display", "block");
-
-                    } else {
-                        $(".del_user_status").html(data.description);
-                        $(".del_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
-                        $(".del_user_status").css("display", "block");
-                    }
-                })
-                .fail(function (jqxhr, settings, ex) {
-                    $(".del_user_status").html("error");
-                    $(".del_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
-                    $(".del_user_status").css("display", "block");
-                });
-
-        }
-    )
-$("#change_").click(
-    function () {
-        $.get('<?php echo site_root . "dash/change" ?>', {username_: $("#User_change_Name").val(),pass: $("#User_change_Pass").val(),newpass:$("#User_change_New_Pass")}, function (data) {
-            if (data.status === "ok") {
-                $(".change_status").html(data.description);
-                $(".change_status").css("backgroud", "rgba(21, 214, 82,0.7)");
-                $(".change_status").css("display", "block");
-
-            } else {
-                $(".change_status").html(data.description);
-                $(".change_status").css("backgroud", "rgba(241, 23, 12,0.7)");
-                $(".change_status").css("display", "block");
-            }
-        })
-            .done(function (data) {
-                if (data.status === "ok") {
-                    $(".change_status").html(data.description);
-                    $(".change_status").css("backgroud", "rgba(21, 214, 82,0.7)");
-                    $(".change_status").css("display", "block");
-
-                } else {
-                    $(".change_status").html(data.description);
-                    $(".change_status").css("backgroud", "rgba(241, 23, 12,0.7)");
-                    $(".change_status").css("display", "block");
-                }
-            })
-            .fail(function (jqxhr, settings, ex) {
-                $(".del_user_status").html("error");
-                $(".del_user_status").css("backgroud", "rgba(241, 23, 12,0.7)");
-                $(".del_user_status").css("display", "block");
-            });
-
-    }
-)
-</script>
 </body>
 </html>

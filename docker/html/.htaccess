@@ -1,0 +1,24 @@
+# Enable rewrite rule
+RewriteEngine On
+
+# Set path as variable if wasent directory
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Set path as variable if wasent file
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Send path to index.php as GET parameter
+RewriteRule ^(.+)$ index.php/$1 [L]
+
+# Disable index folder
+Options -Indexes
+
+# Dont allow user access to this file
+<FilesMatch "(\.pem|\.ini|error_log|\.json|\.lock|\.md|\.xml|\.db|\.sql|LICENSE|\.cert|\.key)$">
+	Order allow,deny
+	Deny from all
+</FilesMatch>
+
+
+# 403 ERROR
+ErrorDocument 403 https://website/404/

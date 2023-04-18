@@ -14,7 +14,7 @@ RewriteRule ^(.+)$ index.php/$1 [L]
 Options -Indexes
 
 # Dont allow user access to this file
-<FilesMatch "(\.pem|error_log|\.json|\.lock|\.md|\.xml|\.db|\.sql|LICENSE|\.cert|\.key)$">
+<FilesMatch "(\.pem|\.ini|error_log|\.json|\.lock|\.md|\.xml|\.db|\.sql|LICENSE|\.cert|\.key)$">
 	Order allow,deny
 	Deny from all
 </FilesMatch>

@@ -1,7 +1,5 @@
-<?php
-session_start();
-include_once "config.php";
-//to install uncomment it
+<?php session_start(); include_once "config.php";
+//to install uncomment it--|>
 include_once "helpers/installer.php";
 include_once "helpers/cont.php";
 

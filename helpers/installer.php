@@ -37,21 +37,24 @@ if ($conn->query($sql) === TRUE) {
 // Select database
 
 $conn->select_db($dbname);
+
+
 $Path = SAVE_IMAGE_PATH;
+
 // Create table
 
 $sql = "CREATE TABLE IF NOT EXISTS users (
 
-username varchar (250)  PRIMARY KEY,
+    username varchar(250) PRIMARY KEY,
 
-`pass` VARCHAR(250) NOT NULL,
+    `pass` VARCHAR(250) NOT NULL,
 
-acs VARCHAR(30) NOT NULL,
+    acs VARCHAR(30) NOT NULL,
 
-profile_image TEXT DEFAULT " . $Path ."default_img.png". ";
+    profile_image TEXT DEFAULT '" . $Path . "default_img.png'
 
 )";
-if ($conn->query($sql) === TRUE) {
+if ($conn->query($sql) === true) {
 
 //    echo "Table MyGuests created successfully\n";
 
@@ -63,7 +66,7 @@ if ($conn->query($sql) === TRUE) {
 
 // Insert row
 
-$sql = "INSERT INTO users (username, pass, acs)
+$sql = "INSERT INTO users (username, `pass`, acs)
 
 VALUES ('admin', 'd033e22ae348aeb5660fc2140aec35850c4da997a5c2f8f5dd13697f9b9c3​e​be', 'admin')";
 

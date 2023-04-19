@@ -77,7 +77,7 @@ class login__model
     public function insert_in_sql_login($user_, $pass_)
     {
         // Create connection
-        $conn = mysqli_connect("localhost", "am1", "A@mir881401", "vpn_am1ral1");
+        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
         // Check connection
         if (!$conn) {

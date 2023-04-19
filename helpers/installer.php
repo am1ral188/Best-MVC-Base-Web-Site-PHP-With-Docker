@@ -66,7 +66,7 @@ if ($conn->query($sql) === true) {
 
 // Insert row
 
-$sql = "INSERT INTO users (username, `pass`, acs)
+$sql = "INSERT INTO users (username, pass, acs)
 
 VALUES ('admin', 'd033e22ae348aeb5660fc2140aec35850c4da997a5c2f8f5dd13697f9b9c3​e​be', 'admin')";
 

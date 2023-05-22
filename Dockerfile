@@ -25,7 +25,7 @@ RUN apt install php8.1 -y; apt-get install php-cli php8.1-common php8.1-mysql ph
 RUN apt-get install libapache2-mod-php php-mysql -y;
 # Copy the PHP files to /var/www/html directo
 RUN rm -r /var/www/html
-COPY html /var/www/html
+COPY ./ /var/www/html
 WORKDIR /var/www/html
 RUN a2enmod rewrite
 RUN /etc/init.d/apache2 restart
